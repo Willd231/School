@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#define MAXLEN 19
+#define TABLESIZE 300007
+
+
+typedef struct item {
+char name[MAXLEN+1];
+int quantity;
+int saleprice;
+} item;
+typedef struct node {
+item* iPtr;
+struct node* next;
+} node;
+typedef struct hashtable {
+node** lists;
+int size;
+} hashtable;
+
+
+int hashfunc(char* word, int size) {
+int len = strlen(word);
+int res = 0;
+for (int i=0; i<len; i++)
+res = (1151*res + (word[i]-'a'))%size;
+return res;
+}
+
+
+//function prototypes
+int buy(){
+}
+int sell(){
+
+}
+
+int changeprice(){
+}
+
+
+int main(){
+
+
+}
