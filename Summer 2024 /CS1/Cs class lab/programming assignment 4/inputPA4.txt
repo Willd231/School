@@ -1,6 +1,0 @@
-5
-add addingFunc 10
-sub subFunc 10
-del delFunc
-search searchFunc
-
