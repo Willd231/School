@@ -4,24 +4,79 @@
     "type": "split",
     "children": [
       {
-        "id": "02e2808579a0178f",
+        "id": "9b3628ae09142345",
         "type": "tabs",
         "children": [
           {
-            "id": "77289a705041f127",
+            "id": "9bdf073a196ff23e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes/Module 2 - Combinational Logic Design.md",
+                "file": "Fall 2024/Computer Science 2/CS1 - Foundation Exam Study Notes/Dynamic Memory Allocation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Module 2 - Combinational Logic Design"
+              "title": "Dynamic Memory Allocation"
+            }
+          },
+          {
+            "id": "e4dd08c49782fe71",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Fall 2024/Differential Equations/Lecture Notes/Chapter 8 - Series Solutions.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Chapter 8 - Series Solutions"
+            }
+          },
+          {
+            "id": "686f6ba00caa90b7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Fall 2024/Computer Science 2/CS1 - Foundation Exam Study Notes/Sorting Algorithms.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Sorting Algorithms"
+            }
+          },
+          {
+            "id": "9af44c8507f1fdfa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Fall 2024/Differential Equations/Lecture Notes/Laplace Transforms.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Laplace Transforms"
+            }
+          },
+          {
+            "id": "0b83c54dc54c0ff9",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.7.7"
+              },
+              "icon": "lucide-file",
+              "title": "Release Notes 1.7.7"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -162,14 +217,24 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "77289a705041f127",
+  "active": "0b83c54dc54c0ff9",
   "lastOpenFiles": [
+    "Fall 2024/Computer Science 2/CS1 - Foundation Exam Study Notes/Sorting Algorithms.md",
+    "Fall 2024/Differential Equations/Lecture Notes/Laplace Transforms.md",
+    "Fall 2024/Differential Equations/Lecture Notes/Chapter 8 - Series Solutions.md",
+    "Fall 2024/Computer Science 2/CS1 - Foundation Exam Study Notes/Sorting",
+    "Fall 2024/Computer Science 2/CS1 - Foundation Exam Study Notes/Dynamic Memory Allocation.md",
+    "Fall 2024/Security in Computing/Module 2/Lecture 9 - Feistel Cipher and DES.md",
+    "Untitled 1",
+    "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes/Module 2 - Combinational Logic Design.md",
+    "Fall 2024/Security in Computing/Research Paper.md",
+    "Fall 2024/Security in Computing/Module 1",
+    "Fall 2024/Security in Computing/Module 2",
     "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes/Module 4 - Computer arithmetic.md",
     "Fall 2024/Computer Science 2/CS2 Notes/Lecture 10-15.md",
     "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes/Module 3 - Sequential logic design.md",
-    "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes/Module 2 - Combinational Logic Design.md",
     "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes/Study.md",
-    "Untitled",
+    "Fall 2024/Computer Science 2/CS1 - Foundation Exam Study Notes/DMA",
     "Fall 2024/Computer Science 2/CS2 Notes/Lecture 5 or 6.md",
     "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes/Module 5 - MIPS.md",
     "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes/Untitled/Untitled.md",
@@ -178,12 +243,11 @@
     "Pasted image 20240923201834.png",
     "Pasted image 20240923201807.png",
     "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes/Module 1 - intro.md",
-    "Fall 2024/Security in Computing/Lecture 3 - Cryptographic Tools.md",
-    "Fall 2024/Security in Computing/Research Paper.md",
+    "Fall 2024/Security in Computing/Module 1/Lecture 3 - Cryptographic Tools.md",
     "Fall 2024/Security in Computing/Research Paper Research.md",
     "Fall 2024/Computer Science 2/CS2 Notes/Untitled",
     "Fall 2024/Computer Science 2/CS2 Notes/Lecture 3 or 4 idk.md",
-    "Fall 2024/Security in Computing/Lecture 2 - Security Overview.md",
+    "Fall 2024/Security in Computing/Module 1/Lecture 2 - Security Overview.md",
     "Fall 2024/Computer Science 2/CS2 Notes",
     "Fall 2024/Computer Science 2/CS1 - Foundation Exam Study Notes",
     "Fall 2024/Differential Equations/Lecture Notes/Lecture 5 - Bernoulli Equations.md",
@@ -193,16 +257,7 @@
     "Fall 2024/Differential Equations/Lecture Notes/Untitled",
     "Fall 2024/Differential Equations/Lecture Notes/Lecture 2 - Solving first order odes.md",
     "Fall 2024/Differential Equations/Lecture Notes/Inro Lecture.md",
-    "Fall 2024/Differential Equations/Lecture Notes",
     "Fall 2024/Differential Equations/Text Book Notes/Chapter 1.md",
-    "Fall 2024/Differential Equations/Untitled.md",
-    "Fall 2024/Differential Equations/Text Book Notes",
-    "Fall 2024/Computer Science 2/CS2 Notes/First 'Real' Lecture.md",
-    "Fall 2024/Computer Logic and Organization/Lecture and Slide Notes",
-    "Fall 2024/CNT Network CLASS/Intro.md",
-    "Fall 2024/Computer Logic and Organization/Text Book Notes",
-    "2024-08-26.md",
-    "Fall 2024/CNT Network CLASS/Lecture 2.md",
     "Untitled.canvas"
   ]
 }
