@@ -1,274 +1,294 @@
-
 public class TwoFourTree {
-    private class TwoFourTreeItem {
-        int values = 1;
-        int value1;
-        int value2;
-        int value3;
+    private class Node {
+        int[] values = new int[3];
+        int valueCount = 0;
         boolean isLeaf = true;
 
-        TwoFourTreeItem parent;
-        TwoFourTreeItem leftChild;
-        TwoFourTreeItem centerChild;
-        TwoFourTreeItem rightChild;
-        TwoFourTreeItem centerLeftChild;
-        TwoFourTreeItem centerRightChild;
+        Node parent;
+        Node[] children = new Node[4];
 
-        public TwoFourTreeItem(int value1) {
-            this.value1 = value1;
-            this.values = 1;
-        }
-
-        public TwoFourTreeItem(int value1, int value2) {
-            this.value1 = value1;
-            this.value2 = value2;
-            this.values = 2;
-        }
-
-        public TwoFourTreeItem(int value1, int value2, int value3) {
-            this.value1 = value1;
-            this.value2 = value2;
-            this.value3 = value3;
-            this.values = 3;
+        public Node(int value) {
+            values[0] = value;
+            valueCount = 1;
         }
 
         public boolean isTwoNode() {
-            return values == 1;
+            return valueCount == 1;
         }
 
         public boolean isThreeNode() {
-            return values == 2;
+            return valueCount == 2;
         }
 
         public boolean isFourNode() {
-            return values == 3;
+            return valueCount == 3;
         }
 
         public boolean isRoot() {
             return parent == null;
         }
 
-        private void printIndents(int indent) {
-            for (int i = 0; i < indent; i++) System.out.printf("  ");
+        public void addValue(int value) {
+            values[valueCount++] = value;
+            sortValues();
         }
 
-        public void printInOrder(int indent) {
-            if (!isLeaf) leftChild.printInOrder(indent + 1);
-            printIndents(indent);
-            System.out.printf("%d\n", value1);
-            if (isThreeNode()) {
-                if (!isLeaf) centerChild.printInOrder(indent + 1);
-                printIndents(indent);
-                System.out.printf("%d\n", value2);
-            } else if (isFourNode()) {
-                if (!isLeaf) centerLeftChild.printInOrder(indent + 1);
-                printIndents(indent);
-                System.out.printf("%d\n", value2);
-                if (!isLeaf) centerRightChild.printInOrder(indent + 1);
-                printIndents(indent);
-                System.out.printf("%d\n", value3);
+        public void sortValues() {
+            for (int i = 0; i < valueCount - 1; i++) {
+                for (int j = i + 1; j < valueCount; j++) {
+                    if (values[i] > values[j]) {
+                        int temp = values[i];
+                        values[i] = values[j];
+                        values[j] = temp;
+                    }
+                }
             }
-            if (!isLeaf) rightChild.printInOrder(indent + 1);
         }
     }
 
-    TwoFourTreeItem root = null;
+    private Node root;
 
     public boolean addValue(int value) {
         if (root == null) {
-            root = new TwoFourTreeItem(value);
+            root = new Node(value);
             return true;
         }
         return insert(root, value);
     }
 
-    private boolean insert(TwoFourTreeItem node, int value) {
+    private boolean insert(Node node, int value) {
         if (node.isLeaf) {
-            if (node.isTwoNode()) {
-                if (value < node.value1) {
-                    node.value2 = node.value1;
-                    node.value1 = value;
-                } else {
-                    node.value2 = value;
-                }
-                node.values++;
-                return true;
-            } else if (node.isThreeNode()) {
-                if (value < node.value1) {
-                    node.value3 = node.value2;
-                    node.value2 = node.value1;
-                    node.value1 = value;
-                } else if (value < node.value2) {
-                    node.value3 = node.value2;
-                    node.value2 = value;
-                } else {
-                    node.value3 = value;
-                }
-                node.values++;
-                splitNode(node);
-                return true;
+            node.addValue(value);
+            if (node.isFourNode()) {
+                split(node);
             }
+            return true;
         } else {
-            if (value < node.value1) {
-                return insert(node.leftChild, value);
-            } else if (node.isThreeNode() && value < node.value2) {
-                return insert(node.centerChild, value);
-            } else {
-                return insert(node.rightChild, value);
+            int i = 0;
+            while (i < node.valueCount && value > node.values[i]) {
+                i++;
             }
+            return insert(node.children[i], value);
         }
-        return false;
     }
 
-    private void splitNode(TwoFourTreeItem node) {
-        int middleValue = node.value2;
+    private void split(Node node) {
+        int middleValue = node.values[1];
+        Node leftChild = new Node(node.values[0]);
+        Node rightChild = new Node(node.values[2]);
 
-        TwoFourTreeItem leftNode = new TwoFourTreeItem(node.value1);
-        TwoFourTreeItem rightNode = new TwoFourTreeItem(node.value3);
+        leftChild.isLeaf = node.isLeaf;
+        rightChild.isLeaf = node.isLeaf;
 
         if (!node.isLeaf) {
-            leftNode.isLeaf = false;
-            leftNode.leftChild = node.leftChild;
-            leftNode.rightChild = node.centerLeftChild;
-            rightNode.isLeaf = false;
-            rightNode.leftChild = node.centerRightChild;
-            rightNode.rightChild = node.rightChild;
-
-            if (leftNode.leftChild != null) leftNode.leftChild.parent = leftNode;
-            if (leftNode.rightChild != null) leftNode.rightChild.parent = leftNode;
-            if (rightNode.leftChild != null) rightNode.leftChild.parent = rightNode;
-            if (rightNode.rightChild != null) rightNode.rightChild.parent = rightNode;
-        }
-
-        if (node.parent != null) {
-            TwoFourTreeItem parent = node.parent;
-
-            if (parent.isTwoNode()) {
-                if (middleValue < parent.value1) {
-                    parent.value2 = parent.value1;
-                    parent.value1 = middleValue;
-                    parent.centerChild = parent.leftChild;
-                    parent.leftChild = leftNode;
-                    parent.rightChild = rightNode;
-                } else {
-                    parent.value2 = middleValue;
-                    parent.centerChild = rightNode;
-                    parent.leftChild = leftNode;
+            for (int i = 0; i < 2; i++) {
+                leftChild.children[i] = node.children[i];
+                if (leftChild.children[i] != null) {
+                    leftChild.children[i].parent = leftChild;
                 }
-            } else if (parent.isThreeNode()) {
-                if (middleValue < parent.value1) {
-                    parent.value3 = parent.value2;
-                    parent.value2 = parent.value1;
-                    parent.value1 = middleValue;
-
-                    parent.centerLeftChild = parent.leftChild;
-                    parent.leftChild = leftNode;
-                    parent.centerRightChild = rightNode;
-                } else if (middleValue < parent.value2) {
-                    parent.value3 = parent.value2;
-                    parent.value2 = middleValue;
-
-                    parent.centerLeftChild = leftNode;
-                    parent.centerRightChild = rightNode;
-                } else {
-                    parent.value3 = middleValue;
-
-                    parent.centerLeftChild = parent.centerChild;
-                    parent.centerChild = leftNode;
-                    parent.rightChild = rightNode;
-                }
-
-                splitNode(parent);
             }
-        } else {
-            root = new TwoFourTreeItem(middleValue);
-            root.leftChild = leftNode;
-            root.rightChild = rightNode;
-            root.isLeaf = false;
-
-            leftNode.parent = root;
-            rightNode.parent = root;
+            for (int i = 2; i < 4; i++) {
+                rightChild.children[i - 2] = node.children[i];
+                if (rightChild.children[i - 2] != null) {
+                    rightChild.children[i - 2].parent = rightChild;
+                }
+            }
         }
 
-        leftNode.parent = node.parent;
-        rightNode.parent = node.parent;
+        if (node.isRoot()) {
+            root = new Node(middleValue);
+            root.isLeaf = false;
+            root.children[0] = leftChild;
+            root.children[1] = rightChild;
+            leftChild.parent = root;
+            rightChild.parent = root;
+        } else {
+            Node parent = node.parent;
+            parent.addValue(middleValue);
+            int index = findChildIndex(parent, node);
+            parent.children[index] = leftChild;
+            parent.children[index + 1] = rightChild;
+            leftChild.parent = parent;
+            rightChild.parent = parent;
+
+            if (parent.isFourNode()) {
+                split(parent);
+            }
+        }
+    }
+
+    private int findChildIndex(Node parent, Node child) {
+        for (int i = 0; i < parent.children.length; i++) {
+            if (parent.children[i] == child) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public boolean hasValue(int value) {
         return find(root, value);
     }
 
-    private boolean find(TwoFourTreeItem node, int value) {
-        if (node == null) return false;
-        if (value == node.value1 || (node.isThreeNode() && value == node.value2)) return true;
-
-        if (value < node.value1) {
-            return find(node.leftChild, value);
-        } else if (node.isThreeNode() && value < node.value2) {
-            return find(node.centerChild, value);
-        } else {
-            return find(node.rightChild, value);
+    private boolean find(Node node, int value) {
+        if (node == null) {
+            return false;
         }
+        for (int i = 0; i < node.valueCount; i++) {
+            if (node.values[i] == value) {
+                return true;
+            }
+        }
+        int i = 0;
+        while (i < node.valueCount && value > node.values[i]) {
+            i++;
+        }
+        return find(node.children[i], value);
     }
 
     public boolean deleteValue(int value) {
         return delete(root, value);
     }
 
-    private boolean delete(TwoFourTreeItem node, int value) {
-        if (node == null) return false;
+    private boolean delete(Node node, int value) {
+        if (node == null) {
+            return false;
+        }
 
-        if (node.isLeaf) {
-            // If the node is a leaf, simply remove the value.
-            if (node.isTwoNode()) {
-                if (node.value1 == value) {
-                    node.values = 0; // Remove the value
-                    return true;
-                }
-            } else if (node.isThreeNode()) {
-                if (node.value1 == value) {
-                    node.value1 = node.value2; // Promote the second value
-                    node.value2 = 0; // Clear the second value
-                    node.values--; // Decrement count of values
-                    return true;
-                } else if (node.value2 == value) {
-                    node.value2 = node.value3; // Promote the third value
-                    node.value3 = 0; // Clear the third value
-                    node.values--; // Decrement count of values
-                    return true;
+        int index = findValueIndex(node, value);
+
+        if (index != -1) {
+            if (node.isLeaf) {
+                removeFromLeaf(node, index);
+            } else {
+                Node predecessor = getPredecessor(node, index);
+                node.values[index] = predecessor.values[predecessor.valueCount - 1];
+                delete(predecessor, predecessor.values[predecessor.valueCount - 1]);
+            }
+            return true;
+        }
+
+        int i = 0;
+        while (i < node.valueCount && value > node.values[i]) {
+            i++;
+        }
+        boolean deleted = delete(node.children[i], value);
+
+        if (node.children[i] != null && node.children[i].valueCount < 1) {
+            rebalance(node, i);
+        }
+
+        return deleted;
+    }
+
+    private int findValueIndex(Node node, int value) {
+        for (int i = 0; i < node.valueCount; i++) {
+            if (node.values[i] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void removeFromLeaf(Node node, int index) {
+        for (int i = index; i < node.valueCount - 1; i++) {
+            node.values[i] = node.values[i + 1];
+        }
+        node.valueCount--;
+    }
+
+    private Node getPredecessor(Node node, int index) {
+        Node current = node.children[index];
+        while (!current.isLeaf) {
+            current = current.children[current.valueCount];
+        }
+        return current;
+    }
+
+    private void rebalance(Node parent, int index) {
+        Node child = parent.children[index];
+        Node sibling = (index > 0) ? parent.children[index - 1] : parent.children[index + 1];
+
+        if (sibling != null && sibling.valueCount > 1) {
+            if (index > 0) {
+                shiftLeft(parent, index);
+            } else {
+                shiftRight(parent, index);
+            }
+        } else {
+            merge(parent, index);
+        }
+    }
+
+    private void shiftLeft(Node parent, int index) {
+        Node child = parent.children[index];
+        Node sibling = parent.children[index - 1];
+
+        for (int i = child.valueCount; i > 0; i--) {
+            child.values[i] = child.values[i - 1];
+        }
+        child.values[0] = parent.values[index - 1];
+        parent.values[index - 1] = sibling.values[sibling.valueCount - 1];
+        sibling.valueCount--;
+        child.valueCount++;
+    }
+
+    private void shiftRight(Node parent, int index) {
+        Node child = parent.children[index];
+        Node sibling = parent.children[index + 1];
+
+        child.values[child.valueCount] = parent.values[index];
+        parent.values[index] = sibling.values[0];
+        sibling.valueCount--;
+        child.valueCount++;
+
+        for (int i = 0; i < sibling.valueCount; i++) {
+            sibling.values[i] = sibling.values[i + 1];
+        }
+    }
+
+    private void merge(Node parent, int index) {
+        Node leftChild = parent.children[index];
+        Node rightChild = parent.children[index + 1];
+    
+        // Merge the parent key with two child nodes
+        leftChild.values[leftChild.valueCount] = parent.values[index];
+        leftChild.valueCount++;
+    
+        for (int i = 0; i < rightChild.valueCount; i++) {
+            leftChild.values[leftChild.valueCount++] = rightChild.values[i];
+        }
+    
+        if (!leftChild.isLeaf) {
+            for (int i = 0; i <= rightChild.valueCount; i++) {
+                leftChild.children[leftChild.valueCount] = rightChild.children[i];
+                if (leftChild.children[leftChild.valueCount] != null) {
+                    leftChild.children[leftChild.valueCount].parent = leftChild;
                 }
             }
-            return false; // Value not found
         }
-
-        // Search in the correct child based on value
-        if (value < node.value1) {
-            return delete(node.leftChild, value);
-        } else if (node.isThreeNode() && value < node.value2) {
-            return delete(node.centerChild, value);
-        } else if (node.isThreeNode() && value == node.value2) {
-            // Handle deletion of the second value from a three-node
-            return deleteFromThreeNode(node, value);
-        } else {
-            return delete(node.rightChild, value);
+    
+        // Shift parent's values and children
+        for (int i = index; i < parent.valueCount - 1; i++) {
+            parent.values[i] = parent.values[i + 1];
+            parent.children[i + 1] = parent.children[i + 2];
         }
+        parent.valueCount--;
     }
-
-    private boolean deleteFromThreeNode(TwoFourTreeItem node, int value) {
-        if (value == node.value2) {
-            node.value2 = node.value3; // Promote the third value
-            node.value3 = 0; // Clear the third value
-            node.values--; // Decrement count of values
-            return true; // Deletion successful
-        }
-        return false; // Value not found
-    }
+    
 
     public void printInOrder() {
-        if (root != null) root.printInOrder(0);
+        printInOrder(root);
     }
 
-    public TwoFourTree() {
-        // Constructor
+    private void printInOrder(Node node) {
+        if (node == null) {
+            return;
+        }
+        for (int i = 0; i < node.valueCount; i++) {
+            printInOrder(node.children[i]);
+            System.out.print(node.values[i] + " ");
+        }
+        printInOrder(node.children[node.valueCount]);
     }
 }
